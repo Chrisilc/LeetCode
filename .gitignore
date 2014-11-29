@@ -1,0 +1,8 @@
+bin
+obj
+Debug
+Release
+*.cbp
+*.depend
+*.layout
+*.cpp~
