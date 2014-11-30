@@ -23,19 +23,12 @@ using namespace std;
 
 class Solution {
 public:
+//best way so far, refer to http://en.wikipedia.org/wiki/Gray_code
     vector<int> grayCode(int n) {
-        vector<int> result(1 << n, 0);
-        int pos = 0;
-        for (vector<int>::iterator it = result.begin() ; it != result.end(); ++it)
-        {
-            int t = 0;
-            for (int i = 0; i < n; i++)
-            {
-                int index = pos >> i;
-                t |= (((index&2)>>1)^(index&1))<<i;
-            }
-            pos++;
-            *it = t;
+        vector<int> result;
+        int size = 1 << n;
+        for(int i = 0; i < size; ++i) {
+            result.push_back((i >> 1)^i);
         }
         return result;
     }
