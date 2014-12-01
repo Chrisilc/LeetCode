@@ -13,34 +13,29 @@ using namespace std;
 class Solution {
 public:
     string addBinary(string a, string b) {
-        return int2String(string2Int(a) + string2Int(b));
-    }
-private:
-    int string2Int(string str)
-    {
-        int result = 0;
-        int len = str.length();
-        for (int i = 0; i < len; i++)
-        {
-            char c = str[len - 1 - i];
-            if (c == '1')
-            {
-                result += 1 << i;
-            }
-        }
-        return result;
-    }
-    string int2String(int num)
-    {
-        if (num == 0)
-        {
-            return "0";
-        }
+        int alen = a.length();
+        int blen = b.length();
         string result = "";
-        while (num != 0)
+        int moreStep = 0;
+        for (int i = 0; i < alen || i < blen; i++)
         {
-            result =  (char)('0' + (num & 1)) + result;
-            num >>= 1;
+            int sa = 0;
+            int sb = 0;
+            if (i < alen)
+            {
+                sa = a[alen - 1 - i] - '0';
+            }
+            if (i < blen)
+            {
+                sb = b[blen - 1 - i] - '0';
+            }
+            int sum = sa + sb + moreStep;
+            result = (char)('0' + (sum & 1)) + result;
+            moreStep = sum >> 1;
+        }
+        if (moreStep > 0)
+        {
+            result = '1' + result;
         }
         return result;
     }
@@ -49,6 +44,7 @@ private:
 int main()
 {
     Solution* s = new Solution();
-    cout << s->addBinary("1111","1") << endl;
+    cout << s->addBinary("10100000100100110110010000010101111011011001101110111111111101000000101111001110001111100001101"
+    ,"110101001011101110001111100110001010100001101011101010000011011011001011101111001100000011011110011") << endl;
     return 0;
 }
