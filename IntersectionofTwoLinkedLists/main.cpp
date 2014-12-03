@@ -21,8 +21,6 @@ Your code should preferably run in O(n) time and use only O(1) memory.
 Credits:
 Special thanks to @stellari for adding this problem and creating all test cases.
 */
-
-
 #include <iostream>
 
 using namespace std;
@@ -39,7 +37,59 @@ class Solution
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
     {
+        if (headA == NULL || headB == NULL)
+        {
+            return NULL;
+        }
+        int aLen = 1;
+        ListNode* p = headA;
+        while(p->next != NULL)
+        {
+            aLen++;
+            p = p->next;
+        }
+        ListNode* pa = p;
+        int bLen = 1;
+        p = headB;
+        while(p->next != NULL)
+        {
+            bLen++;
+            p = p->next;
+        }
+        ListNode* pb = p;
+        if (pa != pb)
+        {
+            return NULL;
+        }
+        pa = headA;
+        pb = headB;
+        if (aLen > bLen)
+        {
+            pa = moveSteps(headA, aLen - bLen);
+        }
+        else if (aLen < bLen)
+        {
+            pb = moveSteps(headB, bLen - aLen);
+        }
+        while (pa != NULL && pb != NULL)
+        {
+            if (pa == pb)
+            {
+                return p;
+            }
+            pa = pa->next;
+            pb = pb->next;
+        }
         return NULL;
+    }
+private:
+    ListNode* moveSteps(ListNode* head, int steps)
+    {
+        for (int i = 0; i < steps && head != NULL; i++)
+        {
+            head = head->next;
+        }
+        return head;
     }
 };
 
