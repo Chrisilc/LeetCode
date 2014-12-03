@@ -75,7 +75,7 @@ public:
         {
             if (pa == pb)
             {
-                return p;
+                return pa;
             }
             pa = pa->next;
             pb = pb->next;
