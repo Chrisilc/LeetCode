@@ -18,11 +18,47 @@ using namespace std;
 class Solution {
 public:
     bool isPalindrome(string s) {
+        int head = 0;
+        int tail = s.length() - 1;
+        while (head < tail)
+        {
+            char hc = s[head];
+            if (!isAlphanumeric(hc))
+            {
+                head++;
+                continue;
+            }
+            char tc = s[tail];
+            if (!isAlphanumeric(tc))
+            {
+                tail--;
+                continue;
+            }
+            if (hc == tc)
+            {
+                head++;
+                tail--;
+                continue;
+            }
+            if ((hc >='0' && hc <= '9') || (tc >= '0' && tc <= '9') || (tc - hc != 'a'-'A' && tc - hc != 'A' - 'a'))
+            {
+                return false;
+            }
+            head++;
+            tail--;
+        }
+        return true;
+    }
+private:
+    bool isAlphanumeric(char c)
+    {
+        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
 };
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    Solution* s = new Solution();
+    cout << s->isPalindrome("1a2") << endl;
     return 0;
 }
