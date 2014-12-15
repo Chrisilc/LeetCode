@@ -114,14 +114,16 @@ private:
     stackItem* _minHead;
     stackItem* _tail;
     stackItem* _minTail;
-
     void insertNode(stackItem* prev, stackItem* target, int prevPos, int nextPos)
     {
         target->points[nextPos] = prev->points[nextPos];
         target->points[prevPos] = prev;
+        if (prev->points[nextPos] != NULL)
+        {
+            prev->points[nextPos]->points[prevPos] = target;
+        }
         prev->points[nextPos] = target;
     }
-
     void removeNode(stackItem* target, int prevPos, int nextPos)
     {
         if (target->points[prevPos] != NULL)
@@ -133,7 +135,6 @@ private:
             target->points[nextPos]->points[prevPos] = target->points[prevPos];
         }
     }
-
     void removeFromTwoLinks(stackItem* item)
     {
         if (item == NULL)
@@ -158,6 +159,7 @@ private:
         }
         removeNode(item, pPrev, pNext);
         removeNode(item, pMinPrev, pMinNext);
+        delete item;
     }
 };
 
@@ -165,6 +167,7 @@ int main()
 {
     MinStack* s = new MinStack();
     s->push(-124);
+    s->print();
     s->push(-164);
     s->getMin();
     s->getMin();
